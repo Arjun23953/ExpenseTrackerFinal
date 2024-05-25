@@ -105,7 +105,7 @@ function Form() {
           icon={plus}
           bPad={".8rem 1.6rem"}
           bRad={"30px"}
-          bg={"var(--color-greenD"}
+          bg={"var(--color-green"}
           color={"#fff"}
         />
       </div>
@@ -114,6 +114,7 @@ function Form() {
 }
 
 const FormStyled = styled.form`
+margin-top:0;
   display: flex;
   flex-direction: column;
   gap: 2rem;

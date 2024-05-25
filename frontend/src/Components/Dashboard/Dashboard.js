@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useGlobalContext } from "../../context/globalContext";
 import History from "../../History/History";
 import { InnerLayout } from "../../styles/Layouts";
-import { dollar } from "../../utils/Icons";
 import Chart from "../Chart/Chart";
 import { IoMdNotifications } from "react-icons/io";
 
@@ -33,7 +32,7 @@ function Dashboard() {
 
   // debugger;
 
-  const email = localStorage.getItem("display");
+  const email = localStorage.getItem("displayName");
 
   // Extract username from email
   const atIndex = email.indexOf("@");
@@ -45,6 +44,14 @@ function Dashboard() {
 
   console.log(capitalizedUsername);
 
+
+  const handleLogOut = () => {
+
+   localStorage.removeItem("User")
+   window.location.reload()
+
+  };
+
   return (
     <DashboardStyled>
       <div className=" h-64 bg-gradient-to-b from-[#5362b2]  to-blue-900 rounded-b-3xl  ">
@@ -53,6 +60,10 @@ function Dashboard() {
             Good Morning, <br />
             <span className="text-3xl">{capitalizedUsername}</span>
           </span>
+          <button onClick={handleLogOut}
+          >
+            LogOut 
+          </button>
           {totalExpenses() > totalIncome() && (
             <div className="absolute top-0 right-0 mt-4 mr-4">
               <IoMdNotifications

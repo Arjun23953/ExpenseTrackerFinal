@@ -1,21 +1,34 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-// import bg from "./img/bg.png";
 import { MainLayout } from "./styles/Layouts";
-// import Orb from "./Components/Orb/Orb";
 import Navigation from "./Components/Navigation/Navigation";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Income from "./Components/Income/Income";
 import Expenses from "./Components/Expenses/Expenses";
 import { useGlobalContext } from "./context/globalContext";
-import { Routes, Route, Outlet, Link } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import SignIn from "./Components/SignIn/SignIn";
 
 function App() {
-  // const orbMemo = useMemo(() => {
-  //   return <Orb />;
-  // }, []);
-  const { isAuthenticated } = useGlobalContext();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = localStorage.getItem("User");
+    if (user) {
+      setIsAuthenticated(true);
+      navigate('/');
+    } else {
+      setIsAuthenticated(false);
+      navigate('/sign');
+    }
+    setLoading(false); // Authentication check completed
+  }, [navigate]);
+
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading indicator while checking authentication
+  }
 
   return (
     <AppStyled className="App">
@@ -32,8 +45,6 @@ function App() {
           </>
         )}
       </Routes>
-
-      {/* {orbMemo} */}
     </AppStyled>
   );
 }
@@ -59,12 +70,10 @@ function Home() {
     }
   };
   return (
-    <>
-      <MainLayout>
-        <Navigation active={active} setActive={setActive} />
-        <main>{displayData()}</main>
-      </MainLayout>
-    </>
+    <MainLayout>
+      <Navigation active={active} setActive={setActive} />
+      <main>{displayData()}</main>
+    </MainLayout>
   );
 }
 
