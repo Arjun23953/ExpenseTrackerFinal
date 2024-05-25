@@ -23,6 +23,9 @@ router
 
   .post("/sign-in", signIn)
   .post("/sign-up", signUp)
-  .get("/user", getUser);
+  .get("/user", getUser)
+
+
+  // .get("/user/:id/get-income", getUser);
 
 module.exports = router;
